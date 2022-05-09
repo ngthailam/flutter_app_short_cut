@@ -82,7 +82,8 @@ class _MyAppState extends State<MyApp> {
       id: getRandomString(5),
       shortLabel: getRandomString(10),
       iconResourceName: 'ic_android_black',
-      uri: 'https://www.google.com');
+      uri: 'https://www.google.com',
+      );
 
   Widget _setBtn() {
     return TextButton(
