@@ -46,6 +46,7 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            _getAllBtn(),
             _setBtn(),
             _pushBtn(),
             _removeBtn(),
@@ -84,6 +85,25 @@ class _MyAppState extends State<MyApp> {
       iconResourceName: 'ic_android_black',
       uri: 'https://www.google.com',
       );
+
+  Widget _getAllBtn() {
+    return Builder(builder: (context) {
+      return TextButton(
+          onPressed: () async {
+            final result = await flutterAppShortcut.getAll();
+            var text = "";
+
+            for (var element in result) {
+              text += "id=" + element.id + "|";
+            }
+            ScaffoldMessenger.of(context)
+                .showSnackBar(
+                SnackBar(content: Text(text))
+            );
+          },
+          child: const Text('Get current shortcuts'));
+    });
+  }
 
   Widget _setBtn() {
     return TextButton(

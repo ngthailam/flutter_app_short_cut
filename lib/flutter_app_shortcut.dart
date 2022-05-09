@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_app_shortcut/short_cut_arg.dart';
 
 abstract class FlutterAppShortcutFunctions {
+  Future<List<ShortcutArg>> getAll();
+
   Future set(List<ShortcutArg> shortCuts);
 
   Future push(ShortcutArg shortcut);
@@ -24,6 +27,19 @@ abstract class FlutterAppShortcutFunctions {
 /// IOS: TBD
 class FlutterAppShortcut implements FlutterAppShortcutFunctions {
   static const MethodChannel _channel = MethodChannel('flutter_app_shortcut');
+
+  @override
+  Future<List<ShortcutArg>> getAll() async {
+    final data = await _channel.invokeMethod('getAllShortcuts');
+    final result = <ShortcutArg>[];
+
+    data.forEach((key, value) {
+      print("$key - $value");
+      result.add(ShortcutArg.fromMap(value));
+    });
+
+    return result;
+  }
 
   @override
   Future<dynamic> set(List<ShortcutArg> shortCuts) async {
