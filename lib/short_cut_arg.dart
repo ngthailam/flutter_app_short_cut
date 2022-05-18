@@ -16,9 +16,9 @@ class ShortcutArg {
   /// Uri of target destination when click on shortcut
   final String uri;
 
-  /// Whether the short cut is enabled or not
-  /// true:
-  /// false
+  /// Tells whether the shortcut is enabled or not
+  /// Setting this does NOT enable/disable the shortcut
+  /// please use the FlutterAppShortcut class
   final bool enabled;
 
   ShortcutArg({

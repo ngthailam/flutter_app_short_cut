@@ -26,6 +26,12 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
         applicationContext = flutterPluginBinding.applicationContext
     }
 
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+        applicationContext = null
+        channel?.setMethodCallHandler(null)
+        channel = null
+    }
+
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         if (applicationContext == null) {
             return result.error("Application context null", null, null)
@@ -147,10 +153,5 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
             applicationContext!!,
             shortcutBuilder.build()
         )
-    }
-
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        channel?.setMethodCallHandler(null)
-        channel = null
     }
 }
