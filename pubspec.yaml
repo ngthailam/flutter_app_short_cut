@@ -1,5 +1,5 @@
 name: flutter_app_shortcut
-description: A plugin to implement native App shortcut
+description: A plugin for you to easily implement dynamic native app shortcut for Android and quick actions for IOS
 version: 0.1.0
 documentation: https://github.com/ngthailam/flutter_app_short_cut/blob/main/README.md
 repository: https://github.com/ngthailam/flutter_app_short_cut
