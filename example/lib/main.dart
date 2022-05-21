@@ -82,7 +82,7 @@ class _MyAppState extends State<MyApp> {
   ShortcutArg _randomShortcut() => ShortcutArg(
       id: getRandomString(5),
       shortLabel: getRandomString(10),
-      iconResourceName: 'ic_android_black',
+      iconResourceName: 'register',
       uri: 'https://www.google.com',
       );
 

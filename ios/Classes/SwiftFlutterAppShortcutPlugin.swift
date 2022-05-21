@@ -5,11 +5,13 @@ struct ShortcutArg {
     var id: String
     var title: String
     var subtitle: String
+    var icon: String
 
     init(dict: Dictionary<String, Any>) {
         self.id = dict["id"] as? String ?? ""
         self.title = dict["shortLabel"] as? String ?? ""
         self.subtitle = dict["longLabel"] as? String ?? ""
+        self.icon = dict["iconResourceName"] as? String ?? ""
     }
 }
 
@@ -43,7 +45,14 @@ public class SwiftFlutterAppShortcutPlugin: NSObject, FlutterPlugin {
      if let args = call.arguments as? Dictionary<String, Any> {
        let shortcutArg = ShortcutArg(dict: args)
        shortcuts.append(
-         UIApplicationShortcutItem(type: shortcutArg.id, localizedTitle: shortcutArg.title, localizedSubtitle: shortcutArg.subtitle, icon: nil)
+         UIApplicationShortcutItem(
+           type: shortcutArg.id,
+           localizedTitle: shortcutArg.title,
+           localizedSubtitle: shortcutArg.subtitle,
+           icon: UIApplicationShortcutIcon(
+             templateImageName: shortcutArg.icon
+           )
+         )
        )
        UIApplication.shared.shortcutItems = shortcuts
        result(true)
@@ -71,10 +80,10 @@ public class SwiftFlutterAppShortcutPlugin: NSObject, FlutterPlugin {
   private func getAllShortcuts(call: FlutterMethodCall, result: FlutterResult) {
       var shortcutItems = UIApplication.shared.shortcutItems ?? []
       var resultDict = [String: Any]()
-      for (index, item) in shortcutItems.enumerated() {
+      for (_, item) in shortcutItems.enumerated() {
         resultDict[item.type] = [
           "id": item.type,
-          "shortLabel": item.localizedTitle
+          "shortLabel": item.localizedTitle,
         ]
       }
 
@@ -95,7 +104,13 @@ public class SwiftFlutterAppShortcutPlugin: NSObject, FlutterPlugin {
     var shortcutItems: [UIApplicationShortcutItem] = []
     for shortcutArg in shortcutArgs {
       shortcutItems.append(
-        UIApplicationShortcutItem(type: shortcutArg.id, localizedTitle: shortcutArg.title, localizedSubtitle: shortcutArg.subtitle, icon: nil)
+        UIApplicationShortcutItem(
+        type: shortcutArg.id,
+        localizedTitle: shortcutArg.title,
+        localizedSubtitle: shortcutArg.subtitle,
+        icon: UIApplicationShortcutIcon(
+          templateImageName: shortcutArg.icon)
+        )
       )
     }
     UIApplication.shared.shortcutItems = shortcutItems

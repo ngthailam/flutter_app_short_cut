@@ -25,9 +25,9 @@ Review [this](/example/lib/main.dart) file to get full example usages
 | Name  | Value | Requirements | Description | IOS | Android |
 | ------------- | ------------- |  ------------- | ------------- | ------------- | ------------- |
 | id  |  String  |  Unique  | When pushing shortcuts with the same ID, the existing one is updated | Yes | Yes |
-| shortLabel | String |  Not empty | App short cut label | Yes | Yes |
-| longLabel | String |   | App short cut label when there is a lot of space | No | Yes |
-| iconResourceName | String |  | Icon resource name (see below for usage) | No | Yes |
+| shortLabel | String |  Not empty | App short cut label (title) | Yes | Yes |
+| longLabel | String |   | App short cut label when there is a lot of space, in IOS, it will be a subtitle instead | Yes | Yes |
+| iconResourceName | String |  | Icon resource name (see below for usage) | Yes | Yes |
 | uri | String |  |Uri when click on shortcut | No | No |
 | enabled | boolean |  | If enabled == false, user cannot interact with app shortcut | No | No |
 
@@ -61,11 +61,14 @@ FlutterAppShortcut().push(
     ShortcutArg(
         id: 'id_1',
         shortLabel: 'Home page',
+        longLabel: 'Subtitle' // in IOS longLabel serves as subtitle instead
+        iconResourceName: 'register'
     );
 )
 ```
-
-- Other fields are not supported yet
+Add a new icon
+- Add image set using Xcode
+- Set `iconResourceName` to the same name as the added icon in previous step
 
 <br><br>
 
