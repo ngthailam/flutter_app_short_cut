@@ -64,8 +64,8 @@ class ShortcutArg {
         id: map['id'] as String,
         shortLabel: map['shortLabel'] as String,
         longLabel: (map['longLabel'] is String) ? map['longLabel'] : '',
-        iconResourceName: map['iconResourceName'] as String,
-        uri: map['uri'] as String,
+        iconResourceName: (map['iconResourceName'] is String) ? map['iconResourceName'] : '',
+        uri: (map['uri'] is String) ? map['uri'] : '',
         enabled: (map['enabled'] is bool) ? map['enabled'] : true);
   }
 

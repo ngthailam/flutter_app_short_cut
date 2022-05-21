@@ -62,13 +62,26 @@ Add a new icon
 ## Android
 - Pinned shortcut cannot be removed, only disabled
 - Cannot set disabled message (will implement in the future)
-
+- Cannot use icon from flutter side (will implement in the future)
+- On click short cut does nothing
+## IOS
+- On IOS, enable and disable shortcuts is not available
+- Cannot use icon from flutter side (will implement in the future)
+- On click short cut does nothing
 <br><br>
 
 # TODO
-- [ ] Reseach + Implement for IOS side
+- [x] Reseach + Implement for IOS side
+## Android
 - [ ] Allow add disabled message to disabled shortcuts
 - [ ] Implement get shortcuts
+- [ ] Allow icon from flutter side
+- [ ] Enable destination on click shortcut
+## IOS
+- [ ] Allow set subtitle
+- [ ] Allow set icon
+- [ ] Allow icon from flutter side
+- [ ] Enable destination on click shortcut
 
 <br><br>
 

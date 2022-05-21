@@ -27,3 +27,5 @@ flutter:
       android:
         package: vn.thailam.flutter_app_shortcut
         pluginClass: FlutterAppShortcutPlugin
+      ios:
+        pluginClass: SwiftFlutterAppShortcutPlugin
