@@ -1,7 +1,6 @@
 # flutter_app_shortcut
 
-A plugin to implement Android native App shortcut. 
-I dont know if IOS has the same functionalities, if so, I will work on it next.
+A plugin to implement Android native App shortcut and IOS quick actions
 
 <br>
 
@@ -23,19 +22,20 @@ Review [this](/example/lib/main.dart) file to get full example usages
 
 ## Arguments
 
-| Name  | Value | Requirements | Description |
-| ------------- | ------------- |  ------------- | ------------- |
-| id  |  String  |  Unique  | When pushing shortcuts with the same ID, the existing one is updated |
-| shortLabel | String |  Not empty | App short cut label |
-| longLabel | String |   | App short cut label when there is a lot of space |
-| iconResourceName | String |  | Icon resource name (see below for usage) |
-| uri | String |  |Uri when click on shortcut |
-| enabled | boolean |  | If enabled == false, user cannot interact with app shortcut |
+| Name  | Value | Requirements | Description | IOS | Android |
+| ------------- | ------------- |  ------------- | ------------- | ------------- | ------------- |
+| id  |  String  |  Unique  | When pushing shortcuts with the same ID, the existing one is updated | Yes | Yes |
+| shortLabel | String |  Not empty | App short cut label | Yes | Yes |
+| longLabel | String |   | App short cut label when there is a lot of space | No | Yes |
+| iconResourceName | String |  | Icon resource name (see below for usage) | No | Yes |
+| uri | String |  |Uri when click on shortcut | No | No |
+| enabled | boolean |  | If enabled == false, user cannot interact with app shortcut | No | No |
 
 <br>
 
-## Android
+## Example
 
+### Android
 Add a new shortcut
 
 ```
@@ -54,6 +54,18 @@ FlutterAppShortcut().push(
 Add a new icon
 - Add icon resource to `android/app/src/main/res`
 - Set `iconResourceName` to the same name as the added icon in previous step
+
+### IOS
+```
+FlutterAppShortcut().push(
+    ShortcutArg(
+        id: 'id_1',
+        shortLabel: 'Home page',
+    );
+)
+```
+
+- Other fields are not supported yet
 
 <br><br>
 
@@ -77,12 +89,13 @@ Add a new icon
 - [ ] Implement get shortcuts
 - [ ] Allow icon from flutter side
 - [ ] Enable destination on click shortcut
+- [ ] Provide accurate errors
 ## IOS
 - [ ] Allow set subtitle
 - [ ] Allow set icon
 - [ ] Allow icon from flutter side
 - [ ] Enable destination on click shortcut
-
+- [ ] Provide accurate errors
 <br><br>
 
 # Bugs, Ideas, and Feedback

@@ -6,3 +6,7 @@
 ## 0.1.0
 
 * Reduce dart version requirement to 2.12.0
+
+## 0.2.0
+
+* Implement shortcuts on IOS
