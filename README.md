@@ -17,34 +17,6 @@ Go to the plugin official [pub.dev](https://pub.dev/packages/flutter_app_shortcu
 
 Review [this](/example/lib/main.dart) file to get full example usages
 
-<br>
-
-## Arguments
-
-### ShortcutArg
-| Name  | Type | Requirements | Description |
-| ------------- | ------------- |  ------------- | ------------- |
-| id  |  String  |  Unique  | When pushing shortcuts with the same ID, the existing one is updated |
-| title | String |  Not empty | App short cut label (title) | 
-| iconResourceName | String |  | Icon resource name (see below for usage) |
-| androidArg | AndroidArg |  | Extra arguments for Android shortcuts |
-| iosArg | IosArg |  | Extra arguments for IOS shortcuts |
-
-### AndroidArg
-| Name  | Type | Requirements | Description |
-| ------------- | ------------- |  ------------- | ------------- |
-| longLabel | String |  | if there is enough space on the device, longLabel replaces title | 
-| uri | String |  |Uri when click on shortcut | 
-
-<br>
-
-### IosArg
-| Name  | Type | Requirements | Description |
-| ------------- | ------------- |  ------------- | ------------- |
-| subtitle | String |  | Subtitle of the shortcut |
-
-<br>
-
 ## Example
 
 ### Android
@@ -83,6 +55,33 @@ Add a new icon
 - Add image set using Xcode
 - Set `iconResourceName` to the same name as the added icon in previous step
 
+
+<br><br>
+
+## Arguments
+
+### ShortcutArg
+| Name  | Type | Requirements | Description |
+| ------------- | ------------- |  ------------- | ------------- |
+| id  |  String  |  Unique  | When pushing shortcuts with the same ID, the existing one is updated |
+| title | String |  Not empty | App short cut label (title) | 
+| iconResourceName | String |  | Icon resource name (see below for usage) |
+| androidArg | AndroidArg |  | Extra arguments for Android shortcuts |
+| iosArg | IosArg |  | Extra arguments for IOS shortcuts |
+
+### AndroidArg
+| Name  | Type | Requirements | Description |
+| ------------- | ------------- |  ------------- | ------------- |
+| longLabel | String |  | if there is enough space on the device, longLabel replaces title | 
+| uri | String |  |Uri when click on shortcut | 
+
+<br>
+
+### IosArg
+| Name  | Type | Requirements | Description |
+| ------------- | ------------- |  ------------- | ------------- |
+| subtitle | String |  | Subtitle of the shortcut |
+
 <br><br>
 
 # Limitations
@@ -93,13 +92,13 @@ Add a new icon
 - Cannot return icon name when cal getShortcuts
 - Cannot set disabled message (will implement in the future)
 - Cannot use icon from flutter side (will implement in the future)
-- On click short cut does nothing
+- On click short cut does nothing (will implement in the future)
 ## IOS
 - On IOS, enable and disable shortcuts is not available
 - Cannot return icon name when cal getShortcuts
 - Does no support disable, enable icons
 - Cannot use icon from flutter side (will implement in the future)
-- On click short cut does nothing
+- On click short cut does nothing (will implement in the future)
 <br><br>
 
 # TODO
