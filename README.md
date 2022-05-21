@@ -8,9 +8,8 @@ A plugin to implement Android native App shortcut and IOS quick actions
 # Getting Started
 
 
-
 ## Where to get it?
-Go to the plugin official pub.dev page to install
+Go to the plugin official [pub.dev](https://pub.dev/packages/flutter_app_shortcut) page to install
 
 <br>
 
@@ -22,14 +21,27 @@ Review [this](/example/lib/main.dart) file to get full example usages
 
 ## Arguments
 
-| Name  | Value | Requirements | Description | IOS | Android |
-| ------------- | ------------- |  ------------- | ------------- | ------------- | ------------- |
-| id  |  String  |  Unique  | When pushing shortcuts with the same ID, the existing one is updated | Yes | Yes |
-| shortLabel | String |  Not empty | App short cut label (title) | Yes | Yes |
-| longLabel | String |   | App short cut label when there is a lot of space, in IOS, it will be a subtitle instead | Yes | Yes |
-| iconResourceName | String |  | Icon resource name (see below for usage) | Yes | Yes |
-| uri | String |  |Uri when click on shortcut | No | No |
-| enabled | boolean |  | If enabled == false, user cannot interact with app shortcut | No | No |
+### ShortcutArg
+| Name  | Type | Requirements | Description |
+| ------------- | ------------- |  ------------- | ------------- |
+| id  |  String  |  Unique  | When pushing shortcuts with the same ID, the existing one is updated |
+| title | String |  Not empty | App short cut label (title) | 
+| iconResourceName | String |  | Icon resource name (see below for usage) |
+| androidArg | AndroidArg |  | Extra arguments for Android shortcuts |
+| iosArg | IosArg |  | Extra arguments for IOS shortcuts |
+
+### AndroidArg
+| Name  | Type | Requirements | Description |
+| ------------- | ------------- |  ------------- | ------------- |
+| longLabel | String |  | if there is enough space on the device, longLabel replaces title | 
+| uri | String |  |Uri when click on shortcut | 
+
+<br>
+
+### IosArg
+| Name  | Type | Requirements | Description |
+| ------------- | ------------- |  ------------- | ------------- |
+| subtitle | String |  | Subtitle of the shortcut |
 
 <br>
 
@@ -42,11 +54,12 @@ Add a new shortcut
 FlutterAppShortcut().push(
     ShortcutArg(
         id: 'id_1',
-        shortLabel: 'Home page',
-        longLabel: 'Go to Home page',
+        title: 'Home page',
         iconResourceName: 'ic_android_black',
-        uri: 'https://www.google.com',
-        enabled: true,
+        androidArg: AndroidArg(
+            longLabel: 'Go to Home page',
+            uri: 'https://www.google.com',
+        )
     );
 )
 ```
@@ -60,9 +73,9 @@ Add a new icon
 FlutterAppShortcut().push(
     ShortcutArg(
         id: 'id_1',
-        shortLabel: 'Home page',
-        longLabel: 'Subtitle' // in IOS longLabel serves as subtitle instead
-        iconResourceName: 'register'
+        title: 'Home page',
+        iconResourceName: 'register',
+        iosArg: IosArg(subtitle: "My subtitle),
     );
 )
 ```
@@ -76,11 +89,15 @@ Add a new icon
 
 ## Android
 - Pinned shortcut cannot be removed, only disabled
+- Shortcut after disabled cannot be enabled, however, pinned shortcut can
+- Cannot return icon name when cal getShortcuts
 - Cannot set disabled message (will implement in the future)
 - Cannot use icon from flutter side (will implement in the future)
 - On click short cut does nothing
 ## IOS
 - On IOS, enable and disable shortcuts is not available
+- Cannot return icon name when cal getShortcuts
+- Does no support disable, enable icons
 - Cannot use icon from flutter side (will implement in the future)
 - On click short cut does nothing
 <br><br>
@@ -89,13 +106,13 @@ Add a new icon
 - [x] Reseach + Implement for IOS side
 ## Android
 - [ ] Allow add disabled message to disabled shortcuts
-- [ ] Implement get shortcuts
+- [x] Implement get shortcuts
 - [ ] Allow icon from flutter side
 - [ ] Enable destination on click shortcut
 - [ ] Provide accurate errors
 ## IOS
-- [ ] Allow set subtitle
-- [ ] Allow set icon
+- [x] Allow set subtitle
+- [x] Allow set icon
 - [ ] Allow icon from flutter side
 - [ ] Enable destination on click shortcut
 - [ ] Provide accurate errors
