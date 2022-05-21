@@ -1,0 +1,44 @@
+name: run Example CI
+
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    name: Test, build debug
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.10.3'
+
+      # Get flutter dependencies.
+      - name: Download pub dependencies
+        run: flutter pub get
+
+      # Statically analyze the Dart code for any errors.
+      - name: Run analyzer
+        run: flutter analyze .
+
+      # Run widget tests for our flutter project.
+      - name: Run tests
+        run: flutter test
+
+      # Build apk.
+      - name: Build debug apk
+        run: cd example && flutter build apk --debug
