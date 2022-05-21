@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_app_shortcut/short_cut_arg.dart';
@@ -34,7 +33,6 @@ class FlutterAppShortcut implements FlutterAppShortcutFunctions {
     final result = <ShortcutArg>[];
 
     data.forEach((key, value) {
-      print("$key - $value");
       result.add(ShortcutArg.fromMap(value));
     });
 
