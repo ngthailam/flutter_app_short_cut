@@ -10,6 +10,18 @@ data class ShortcutArg(
     val iconResourceName: String = "",
     val uri: String = "",
 ) {
+    fun toMap(): Map<String, Any> {
+        return mapOf(
+            "id" to id,
+            "title" to shortLabel,
+            "iconResourceName" to iconResourceName,
+            "androidArg" to mapOf<String, Any>(
+               "longLabel" to longLabel,
+               "uri" to uri
+            )
+        )
+    }
+
     companion object {
         fun fromInfoCompat(infoCompat: ShortcutInfoCompat): ShortcutArg {
             return ShortcutArg(
@@ -22,13 +34,13 @@ data class ShortcutArg(
         }
 
         fun fromHashMap(map: Map<String, Any>): ShortcutArg {
-            val shortLabel = map["shortLabel"] as String;
+            val androidArg = map["androidArg"] as Map<String, Any>
             return ShortcutArg(
                 id = map["id"] as String,
-                shortLabel = shortLabel,
-                longLabel = map["longLabel"] as String,
+                shortLabel = map["title"] as String,
+                longLabel = androidArg["longLabel"] as String,
                 iconResourceName = map["iconResourceName"] as String,
-                uri = map["uri"] as String
+                uri = androidArg["uri"] as String
             )
         }
     }

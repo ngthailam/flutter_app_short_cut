@@ -9,9 +9,14 @@ struct ShortcutArg {
 
     init(dict: Dictionary<String, Any>) {
         self.id = dict["id"] as? String ?? ""
-        self.title = dict["shortLabel"] as? String ?? ""
-        self.subtitle = dict["longLabel"] as? String ?? ""
+        self.title = dict["title"] as? String ?? ""
         self.icon = dict["iconResourceName"] as? String ?? ""
+        // Set subtitle
+        var subtitle: String = ""
+        if let iosArg = dict["iosArg"] as? [String: Any] {
+            subtitle = iosArg["subtitle"] as? String ?? ""
+        }
+        self.subtitle = subtitle
     }
 }
 
@@ -78,12 +83,15 @@ public class SwiftFlutterAppShortcutPlugin: NSObject, FlutterPlugin {
   }
 
   private func getAllShortcuts(call: FlutterMethodCall, result: FlutterResult) {
-      var shortcutItems = UIApplication.shared.shortcutItems ?? []
+      let shortcutItems = UIApplication.shared.shortcutItems ?? []
       var resultDict = [String: Any]()
       for (_, item) in shortcutItems.enumerated() {
         resultDict[item.type] = [
           "id": item.type,
-          "shortLabel": item.localizedTitle,
+          "title": item.localizedTitle,
+          "iosArg": [
+            "subtitle": item.localizedSubtitle
+          ]
         ]
       }
 

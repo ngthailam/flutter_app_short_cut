@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -61,7 +62,6 @@ class _MyAppState extends State<MyApp> {
                   return Container(
                     margin:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                    color: item.enabled ? Colors.blueAccent : Colors.grey,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                     child: Column(
@@ -81,10 +81,11 @@ class _MyAppState extends State<MyApp> {
 
   ShortcutArg _randomShortcut() => ShortcutArg(
       id: getRandomString(5),
-      shortLabel: getRandomString(10),
-      iconResourceName: 'register',
-      uri: 'https://www.google.com',
-      );
+      title: getRandomString(10),
+      iconResourceName: 'ic_android_black',
+      androidArg: AndroidArg(
+          uri: 'https://www.google.com', longLabel: "Very long label"),
+      iosArg: IosArg(subtitle: 'my subtitle'));
 
   Widget _getAllBtn() {
     return Builder(builder: (context) {
@@ -97,9 +98,7 @@ class _MyAppState extends State<MyApp> {
               text += "id=" + element.id + "|";
             }
             ScaffoldMessenger.of(context)
-                .showSnackBar(
-                SnackBar(content: Text(text))
-            );
+                .showSnackBar(SnackBar(content: Text(text)));
           },
           child: const Text('Get current shortcuts'));
     });
@@ -157,28 +156,52 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _enableBtn() {
-    return TextButton(
-        onPressed: () async {
-          await flutterAppShortcut
-              .enableShortcuts(_shortcuts.map((e) => e.id).toList());
-          setState(() {
-            _shortcuts =
-                _shortcuts.map((e) => e.copyWith(enabled: true)).toList();
-          });
-        },
-        child: const Text('Enable shortcut'));
+    return Builder(
+      builder: (ctx) => TextButton(
+          onPressed: () async {
+            if (_isIos(ctx)) {
+              return;
+            }
+            await flutterAppShortcut
+                .enableShortcuts(_shortcuts.map((e) => e.id).toList());
+            setState(() {
+              _shortcuts = _shortcuts
+                  .map((e) => e.copyWith(
+                      androidArg: e.androidArg?.copyWith(enabled: true)))
+                  .toList();
+            });
+          },
+          child: const Text('Enable shortcut')),
+    );
+  }
+
+  bool _isIos(BuildContext context) {
+    if (Platform.isIOS) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Function on available on IOS')));
+      return true;
+    }
+
+    return false;
   }
 
   Widget _disableBtn() {
-    return TextButton(
-        onPressed: () async {
-          await flutterAppShortcut
-              .disableShortcuts(_shortcuts.map((e) => e.id).toList());
-          setState(() {
-            _shortcuts =
-                _shortcuts.map((e) => e.copyWith(enabled: false)).toList();
-          });
-        },
-        child: const Text('Disable shortcut'));
+    return Builder(
+      builder: (ctx) => TextButton(
+          onPressed: () async {
+            if (_isIos(ctx)) {
+              return;
+            }
+            await flutterAppShortcut
+                .disableShortcuts(_shortcuts.map((e) => e.id).toList());
+            setState(() {
+              _shortcuts = _shortcuts
+                  .map((e) => e.copyWith(
+                      androidArg: e.androidArg?.copyWith(enabled: false)))
+                  .toList();
+            });
+          },
+          child: const Text('Disable shortcut')),
+    );
   }
 }

@@ -42,7 +42,7 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
             "getAllShortcuts" -> {
                 return try {
                     val shortcuts = ShortcutManagerCompat.getDynamicShortcuts(applicationContext!!)
-                    result.success(shortcuts.associate { it.id to ShortcutArg.fromInfoCompat(it) })
+                    result.success(shortcuts.associate { it.id to ShortcutArg.fromInfoCompat(it).toMap() })
                 } catch (t: Throwable) {
                     result.error("getAllShortcuts", t.message, args)
                 }
@@ -59,8 +59,8 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
             }
             "enableShortcuts" -> {
                 return try {
-                    val enabledIds = args?.toList()
-                        ?.map { entry -> entry.first } ?: return result.error("enableShortcut", "Invalid args=$args", args)
+                    val enabledIds = args?.toList()?.map { entry -> entry.first }
+                         ?: return result.error("enableShortcut", "Invalid args=$args", args)
                     val shortcutsDynamic = ShortcutManagerCompat.getShortcuts(applicationContext!!, ShortcutManagerCompat.FLAG_MATCH_DYNAMIC)
                     val shortcutsCached = ShortcutManagerCompat.getShortcuts(applicationContext!!, ShortcutManagerCompat.FLAG_MATCH_CACHED)
                     val shortcutsPinned = ShortcutManagerCompat.getShortcuts(applicationContext!!, ShortcutManagerCompat.FLAG_MATCH_PINNED)
