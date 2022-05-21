@@ -10,3 +10,7 @@
 ## 0.2.0
 
 * Implement shortcuts on IOS
+
+## 0.2.1
+
+* Add feedback when icon resource not found on Android
