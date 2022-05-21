@@ -43,8 +43,8 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
                 return try {
                     val shortcuts = ShortcutManagerCompat.getDynamicShortcuts(applicationContext!!)
                     result.success(shortcuts.associate { it.id to ShortcutArg.fromInfoCompat(it) })
-                } catch (e: Exception) {
-                    result.error("getAllShortcuts", e.message, args)
+                } catch (t: Throwable) {
+                    result.error("getAllShortcuts", t.message, args)
                 }
             }
             "disableShortcuts" -> {
@@ -53,8 +53,8 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
                         ?: return result.error("disableShortcut", "Invalid args=$args", args)
                     ShortcutManagerCompat.disableShortcuts(applicationContext!!, ids, "Disabled")
                     result.success(true)
-                } catch (e: Exception) {
-                    result.error("disableShortcut", e.message, args)
+                } catch (t: Throwable) {
+                    result.error("disableShortcut", t.message, args)
                 }
             }
             "enableShortcuts" -> {
@@ -69,8 +69,8 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
                     }
                     ShortcutManagerCompat.enableShortcuts(applicationContext!!, shortcutsToEnable)
                     result.success(true)
-                } catch (e: Exception) {
-                    result.error("enableShortcut", e.message, args)
+                } catch (t: Throwable) {
+                    result.error("enableShortcut", t.message, args)
                 }
             }
             "setShortcuts" -> {
@@ -81,8 +81,8 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
                         pushShortcut(shortcutArg)
                     }
                     result.success(true)
-                } catch (e: Exception) {
-                    result.error("setShortcuts", e.message, args)
+                } catch (t: Throwable) {
+                    result.error("setShortcuts", t.message, args)
                 }
             }
             "pushShortcut" -> {
@@ -91,8 +91,8 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
                     val shortcutArg = ShortcutArg.fromHashMap(args)
                     pushShortcut(shortcutArg)
                     result.success(true)
-                } catch (e: Exception) {
-                    result.error("pushShortcut", e.message, args)
+                } catch (t: Throwable) {
+                    result.error("pushShortcut", t.message, args)
                 }
             }
             "removeShortcut" -> {
@@ -102,8 +102,8 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
                     val id = args["id"] as String
                     ShortcutManagerCompat.removeDynamicShortcuts(applicationContext!!, listOf(id))
                     result.success(true)
-                } catch (e: Exception) {
-                    result.error("removeShortcut", e.message, args)
+                } catch (t: Throwable) {
+                    result.error("removeShortcut", t.message, args)
                 }
             }
             "removeAllShortcuts" -> {
@@ -111,8 +111,8 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
                     ShortcutManagerCompat.removeAllDynamicShortcuts(applicationContext!!)
                     removeAllShortcuts()
                     result.success(true)
-                } catch (e: Exception) {
-                    result.error("removeAllShortcuts", e.message, args)
+                } catch (t: Throwable) {
+                    result.error("removeAllShortcuts", t.message, args)
                 }
             }
             else -> result.notImplemented();
@@ -143,6 +143,10 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
                     "drawable",
                     applicationContext!!.packageName,
                 )
+
+            if (resourceId == 0) {
+                throw InvalidResourceException("Invalid resourceId=$resourceId, did you forgot to add icon resource in android/app/src/main/res ?")
+            }
 
             val iconCompat =
                 IconCompat.createWithResource(applicationContext!!, resourceId)
