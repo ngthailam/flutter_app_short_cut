@@ -139,3 +139,13 @@ class IosArg {
     );
   }
 }
+
+class DisableShortcutArg {
+  final String id;
+  final String reason;
+
+  DisableShortcutArg({
+    required this.id,
+    this.reason = '',
+  });
+}

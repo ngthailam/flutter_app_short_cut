@@ -16,7 +16,7 @@ abstract class FlutterAppShortcutFunctions {
 
   Future enableShortcuts(List<String> shortcutIds);
 
-  Future disableShortcuts(List<String> shortcutIds);
+  Future disableShortcuts(List<DisableShortcutArg> disableArgs);
 }
 
 /// Android:
@@ -68,8 +68,8 @@ class FlutterAppShortcut implements FlutterAppShortcutFunctions {
   }
 
   @override
-  Future disableShortcuts(List<String> shortcutIds) {
-    final arguments = {for (var id in shortcutIds) id: id};
+  Future disableShortcuts(List<DisableShortcutArg> disableArgs) {
+    final arguments = {for (var arg in disableArgs) arg.id: arg.reason};
     return _channel.invokeMethod('disableShortcuts', arguments);
   }
 
