@@ -45,3 +45,8 @@ data class ShortcutArg(
         }
     }
 }
+
+data class DisableShortcutArg(
+    val id: String,
+    val reason: String,
+)

@@ -84,7 +84,7 @@ class _MyAppState extends State<MyApp> {
       title: getRandomString(10),
       iconResourceName: 'ic_android_black',
       androidArg: AndroidArg(
-          uri: 'https://www.google.com', longLabel: "Very long label"),
+          uri: 'test://xxx', longLabel: "Very long label"),
       iosArg: IosArg(subtitle: 'my subtitle'));
 
   Widget _getAllBtn() {
@@ -192,8 +192,10 @@ class _MyAppState extends State<MyApp> {
             if (_isIos(ctx)) {
               return;
             }
-            await flutterAppShortcut
-                .disableShortcuts(_shortcuts.map((e) => e.id).toList());
+            await flutterAppShortcut.disableShortcuts(_shortcuts
+                .map((e) =>
+                    DisableShortcutArg(id: e.id, reason: 'Reason ${e.id}'))
+                .toList());
             setState(() {
               _shortcuts = _shortcuts
                   .map((e) => e.copyWith(
