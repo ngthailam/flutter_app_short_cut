@@ -40,7 +40,8 @@ class FlutterAppShortcut implements FlutterAppShortcutFunctions {
   }
 
   @override
-  Future<dynamic> set(List<ShortcutArg> shortCuts) async {
+  Future set(List<ShortcutArg> shortCuts) async {
+    if (shortCuts.isEmpty) return Future.value(true);
     final Map arguments = {};
     for (var element in shortCuts) {
       arguments[element.id] = element.toMap();
@@ -61,6 +62,7 @@ class FlutterAppShortcut implements FlutterAppShortcutFunctions {
 
   @override
   Future removeById(String shortcutId) {
+    if (shortcutId.isEmpty) return Future.value(true);
     final arguments = {
       'id': shortcutId,
     };
@@ -69,12 +71,14 @@ class FlutterAppShortcut implements FlutterAppShortcutFunctions {
 
   @override
   Future disableShortcuts(List<DisableShortcutArg> disableArgs) {
+    if (disableArgs.isEmpty) return Future.value(true);
     final arguments = {for (var arg in disableArgs) arg.id: arg.reason};
     return _channel.invokeMethod('disableShortcuts', arguments);
   }
 
   @override
   Future enableShortcuts(List<String> shortcutIds) {
+    if (shortcutIds.isEmpty) return Future.value(true);
     final arguments = {for (var id in shortcutIds) id: id};
     return _channel.invokeMethod('enableShortcuts', arguments);
   }

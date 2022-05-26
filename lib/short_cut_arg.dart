@@ -27,8 +27,7 @@ class ShortcutArg {
     this.androidArg,
     this.iosArg,
   })  : assert(id.isNotEmpty),
-        assert(title.isNotEmpty),
-        assert(androidArg != null || iosArg != null);
+        assert(title.isNotEmpty);
 
   ShortcutArg copyWith({
     String? id,
@@ -60,11 +59,11 @@ class ShortcutArg {
       id: map['id'] as String,
       title: map['title'] as String,
       iconResourceName:
-          (map['iconResourceName'] is String) ? map['iconResourceName'] : '',
-      androidArg: (map[keyAndroidArg] is Map<dynamic, dynamic>)
+          map['iconResourceName'] is String ? map['iconResourceName'] : '',
+      androidArg: map[keyAndroidArg] is Map<dynamic, dynamic>
           ? AndroidArg.fromMap(map[keyAndroidArg])
           : null,
-      iosArg: (map[keyIosArg] is Map<dynamic, dynamic>)
+      iosArg: map[keyIosArg] is Map<dynamic, dynamic>
           ? IosArg.fromMap(map[keyIosArg])
           : null,
     );
@@ -87,12 +86,11 @@ class AndroidArg {
   /// Uri of target destination when click on shortcut
   final String uri;
 
-  AndroidArg({this.longLabel = '', this.uri = ''});
+  const AndroidArg({this.longLabel = '', this.uri = ''});
 
   AndroidArg copyWith({
     String? longLabel,
     String? uri,
-    bool? enabled,
   }) =>
       AndroidArg(
         longLabel: longLabel ?? this.longLabel,
@@ -108,8 +106,8 @@ class AndroidArg {
 
   factory AndroidArg.fromMap(Map<dynamic, dynamic> map) {
     return AndroidArg(
-      longLabel: map['longLabel'] as String,
-      uri: map['uri'] as String,
+      longLabel: map['longLabel'] is String ? map['longLabel'] : "",
+      uri: map['uri'] is String ? map['uri'] : '',
     );
   }
 }
@@ -118,7 +116,7 @@ class IosArg {
   /// Subtitle beneath title
   final String subtitle;
 
-  IosArg({this.subtitle = ''});
+  const IosArg({this.subtitle = ''});
 
   IosArg copyWith({
     String? subtitle,
@@ -135,7 +133,7 @@ class IosArg {
 
   factory IosArg.fromMap(Map<dynamic, dynamic> map) {
     return IosArg(
-      subtitle: map['subtitle'] as String,
+      subtitle: map['subtitle'] is String ? map['subtitle'] : "",
     );
   }
 }
@@ -144,7 +142,7 @@ class DisableShortcutArg {
   final String id;
   final String reason;
 
-  DisableShortcutArg({
+  const DisableShortcutArg({
     required this.id,
     this.reason = '',
   });
