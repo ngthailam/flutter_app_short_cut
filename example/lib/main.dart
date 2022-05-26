@@ -44,36 +44,40 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('App shortcut plugin example app'),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _getAllBtn(),
-            _setBtn(),
-            _pushBtn(),
-            _removeBtn(),
-            _removeAllBtn(),
-            _enableBtn(context),
-            _disableBtn(context),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _shortcuts.length,
-                itemBuilder: (context, i) {
-                  final item = _shortcuts[i];
-                  return Container(
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(item.toString()),
-                        ]),
-                  );
-                },
-              ),
-            ),
-          ],
+        body: Builder(
+          builder: (context) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _getAllBtn(),
+                _setBtn(),
+                _pushBtn(),
+                _removeBtn(),
+                _removeAllBtn(),
+                _enableBtn(context),
+                _disableBtn(context),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _shortcuts.length,
+                    itemBuilder: (context, i) {
+                      final item = _shortcuts[i];
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 4),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(item.toString()),
+                            ]),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -83,7 +87,8 @@ class _MyAppState extends State<MyApp> {
       id: getRandomString(5),
       title: getRandomString(10),
       iconResourceName: 'ic_android_black',
-      androidArg: const AndroidArg(uri: 'test://xxx', longLabel: "Very long label"),
+      androidArg:
+          const AndroidArg(uri: 'test://xxx', longLabel: "Very long label"),
       iosArg: const IosArg(subtitle: 'my subtitle'));
 
   Widget _getAllBtn() {

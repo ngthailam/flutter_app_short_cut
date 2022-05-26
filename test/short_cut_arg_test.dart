@@ -129,7 +129,8 @@ void main() {
         keyTitle: title,
         keyIconResourceName: iconResourceName,
         keyAndroidArg: null,
-        keyIosArg: {"subtitle": subtitle}
+        keyIosArg: {"subtitle": subtitle},
+        keyAndroidReadOnlyArg: null,
       };
       final actual = ShortcutArg(
           id: id,
@@ -164,10 +165,13 @@ void main() {
       ).toString();
 
       expect(
-          actual,
-          "[ShortcutArg] id=$id, shortLabel=$title, "
-          "iconResourceName=$iconResourceName, "
-          "androidArg=${null}, iosArg=${iosArg.toMap()}");
+        actual,
+        "[ShortcutArg] id=$id, shortLabel=$title, "
+        "iconResourceName=$iconResourceName, "
+        "androidArg=${null}, "
+        "androidReadOnlyArg=${null},"
+        "iosArg=${iosArg.toMap()}",
+      );
     });
 
     test('test ShortcutArg copyWith', () {

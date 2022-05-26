@@ -2,6 +2,7 @@ const String keyId = "id";
 const String keyTitle = "title";
 const String keyIconResourceName = "iconResourceName";
 const String keyAndroidArg = "androidArg";
+const String keyAndroidReadOnlyArg = "androidReadOnlyArg";
 const String keyIosArg = "iosArg";
 
 class ShortcutArg {
@@ -17,6 +18,12 @@ class ShortcutArg {
   /// Args for Android only
   final AndroidArg? androidArg;
 
+  /// Args for Android only
+  /// These args contains read only details of the shortcut
+  /// Such as enabled, isPinned, which cannot be send directly to native side
+  /// to cause change, so they are readonly
+  final AndroidReadOnlyArg? androidReadOnlyArg;
+
   /// Args for IOS only
   final IosArg? iosArg;
 
@@ -25,6 +32,7 @@ class ShortcutArg {
     required this.title,
     this.iconResourceName = '',
     this.androidArg,
+    this.androidReadOnlyArg,
     this.iosArg,
   })  : assert(id.isNotEmpty),
         assert(title.isNotEmpty);
@@ -34,6 +42,7 @@ class ShortcutArg {
     String? title,
     String? iconResourceName,
     AndroidArg? androidArg,
+    AndroidReadOnlyArg? androidReadOnlyArg,
     IosArg? iosArg,
   }) =>
       ShortcutArg(
@@ -41,6 +50,7 @@ class ShortcutArg {
         title: title ?? this.title,
         iconResourceName: iconResourceName ?? this.iconResourceName,
         androidArg: androidArg ?? this.androidArg,
+        androidReadOnlyArg: androidReadOnlyArg ?? this.androidReadOnlyArg,
         iosArg: iosArg ?? this.iosArg,
       );
 
@@ -50,6 +60,7 @@ class ShortcutArg {
       keyTitle: title,
       keyIconResourceName: iconResourceName,
       keyAndroidArg: androidArg?.toMap(),
+      keyAndroidReadOnlyArg: androidReadOnlyArg?.toMap(),
       keyIosArg: iosArg?.toMap(),
     };
   }
@@ -63,6 +74,9 @@ class ShortcutArg {
       androidArg: map[keyAndroidArg] is Map<dynamic, dynamic>
           ? AndroidArg.fromMap(map[keyAndroidArg])
           : null,
+      androidReadOnlyArg: map[keyAndroidReadOnlyArg] is Map<dynamic, dynamic>
+          ? AndroidReadOnlyArg.fromMap(map[keyAndroidReadOnlyArg])
+          : null,
       iosArg: map[keyIosArg] is Map<dynamic, dynamic>
           ? IosArg.fromMap(map[keyIosArg])
           : null,
@@ -73,7 +87,9 @@ class ShortcutArg {
   String toString() {
     return "[ShortcutArg] id=$id, shortLabel=$title, "
         "iconResourceName=$iconResourceName, "
-        "androidArg=${androidArg?.toMap()}, iosArg=${iosArg?.toMap()}";
+        "androidArg=${androidArg?.toMap()}, "
+        "androidReadOnlyArg=${androidReadOnlyArg?.toMap()},"
+        "iosArg=${iosArg?.toMap()}";
   }
 }
 
@@ -108,6 +124,31 @@ class AndroidArg {
     return AndroidArg(
       longLabel: map['longLabel'] is String ? map['longLabel'] : "",
       uri: map['uri'] is String ? map['uri'] : '',
+    );
+  }
+}
+
+class AndroidReadOnlyArg {
+  final bool? isPinned;
+  final String? disabledMsg;
+  final bool? isEnabled;
+
+  AndroidReadOnlyArg({this.isPinned, this.disabledMsg, this.isEnabled});
+
+  Map<String, dynamic> toMap() {
+    return {
+      "isPinned": isPinned,
+      "disabledMsg": disabledMsg,
+      "isEnabled": isEnabled,
+    };
+  }
+
+  factory AndroidReadOnlyArg.fromMap(Map<dynamic, dynamic> map) {
+    return AndroidReadOnlyArg(
+      isPinned: map['isPinned'] is String ? (map['isPinned'] == 'true') : null,
+      disabledMsg: map['disabledMsg'] is String ? map['disabledMsg'] : '',
+      isEnabled:
+          map['isEnabled'] is String ? (map['isEnabled'] == 'true') : null,
     );
   }
 }

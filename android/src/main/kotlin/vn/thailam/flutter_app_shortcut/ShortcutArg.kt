@@ -9,6 +9,9 @@ data class ShortcutArg(
     val longLabel: String = "",
     val iconResourceName: String = "",
     val uri: String = "",
+    val isPinned: Boolean? = null,
+    val disabledMsg: String? = null,
+    val isEnabled: Boolean? = null,
 ) {
     fun toMap(): Map<String, Any> {
         return mapOf(
@@ -18,6 +21,11 @@ data class ShortcutArg(
             "androidArg" to mapOf<String, Any>(
                "longLabel" to longLabel,
                "uri" to uri
+            ),
+            "androidReadOnlyArg" to mapOf<String, Any>(
+                "isPinned" to (isPinned?.toString() ?: "null"),
+                "disabledMsg" to (disabledMsg ?: ""),
+                "isEnabled" to (isEnabled?.toString() ?: "null"),
             )
         )
     }
@@ -30,6 +38,9 @@ data class ShortcutArg(
                 longLabel = infoCompat.longLabel.toString(),
                 uri = infoCompat.intent.toUri(Intent.URI_INTENT_SCHEME),
                 iconResourceName = "",
+                isPinned = infoCompat.isPinned,
+                isEnabled = infoCompat.isEnabled,
+                disabledMsg = infoCompat.disabledMessage.toString()
             )
         }
 
