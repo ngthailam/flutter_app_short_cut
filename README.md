@@ -4,9 +4,12 @@ A plugin to implement Android native App shortcut and IOS quick actions
 
 <br>
 
+Android          | IOS
+:-------------------------:|:-------------------------:
+![](/asset/android_shortcut.png)  |  ![](/asset/ios_shortcut.png)
+
 
 # Getting Started
-
 
 ## Where to get it?
 Go to the plugin official [pub.dev](https://pub.dev/packages/flutter_app_shortcut) page to install
@@ -16,8 +19,6 @@ Go to the plugin official [pub.dev](https://pub.dev/packages/flutter_app_shortcu
 ## How to use it?
 
 Review [this](/example/lib/main.dart) file to get full example usages
-
-## Example
 
 ### Android
 Add a new shortcut
@@ -47,7 +48,7 @@ FlutterAppShortcut().push(
         id: 'id_1',
         title: 'Home page',
         iconResourceName: 'register',
-        iosArg: IosArg(subtitle: "My subtitle),
+        iosArg: IosArg(subtitle: 'My subtitle'),
     );
 )
 ```
@@ -58,12 +59,25 @@ Add a new icon
 
 <br><br>
 
+## Supported operations
+
+'x' means the operation is supported on platform
+
+| Name  | IOS | Android |
+| ------------- | ------------- |  ------------- |
+| getAll  |  x  |  x  | 
+| set | x | x | 
+| push | x | x | 
+| removeById | x | x | 
+| removeAll | x | x | 
+| enableShortcuts |  | x | 
+| disableShortcuts |  | x | 
 ## Arguments
 
 ### ShortcutArg
 | Name  | Type | Requirements | Description |
 | ------------- | ------------- |  ------------- | ------------- |
-| id  |  String  |  Unique  | When pushing shortcuts with the same ID, the existing one is updated |
+| id  |  String  |  Unique, Not empty  | When pushing shortcuts with the same ID, the existing one is updated |
 | title | String |  Not empty | App short cut label (title) | 
 | iconResourceName | String |  | Icon resource name (see below for usage) |
 | androidArg | AndroidArg |  | Extra arguments for Android shortcuts |
@@ -85,36 +99,29 @@ Add a new icon
 <br><br>
 
 # Limitations
-
+Limitations by either platform or because this plugin does not support it yet
 ## Android
 - Pinned shortcut cannot be removed, only disabled
 - Shortcut after disabled cannot be enabled, however, pinned shortcut can
 - Cannot return icon name when cal getShortcuts
-- Cannot set disabled message (will implement in the future)
+- Cannot return enabled, disabled status
+- Max 4 shortcuts can be displayed at once
 - Cannot use icon from flutter side (will implement in the future)
-- On click short cut does nothing (will implement in the future)
 ## IOS
-- On IOS, enable and disable shortcuts is not available
 - Cannot return icon name when cal getShortcuts
-- Does no support disable, enable icons
+- Max 4 shortcuts can be displayed at once
 - Cannot use icon from flutter side (will implement in the future)
-- On click short cut does nothing (will implement in the future)
+- On click short cut does not support deeplink (will implement in the future)
 <br><br>
 
-# TODO
-- [x] Reseach + Implement for IOS side
+# TODOs
 ## Android
-- [ ] Allow add disabled message to disabled shortcuts
-- [x] Implement get shortcuts
 - [ ] Allow icon from flutter side
-- [ ] Enable destination on click shortcut
-- [ ] Provide accurate errors
+- [ ] Provide more accurate errors if needed
 ## IOS
-- [x] Allow set subtitle
-- [x] Allow set icon
 - [ ] Allow icon from flutter side
-- [ ] Enable destination on click shortcut
-- [ ] Provide accurate errors
+- [ ] Enable deeplink navigation on click shortcut
+- [ ] Provide more accurate errors if needed
 <br><br>
 
 # Bugs, Ideas, and Feedback
@@ -124,18 +131,5 @@ For bugs please use [GitHub Issues](https://github.com/ngthailam/flutter_app_sho
 <br><br>
 
 # License
-```
-Copyright 2021 The Flutter App Shortcuts Project Authors
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+[See license](https://github.com/ngthailam/flutter_app_short_cut/blob/main/LICENSE)
