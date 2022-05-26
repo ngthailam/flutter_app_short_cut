@@ -1,6 +1,5 @@
 name: run Example CI
 
-
 on:
   push:
     branches:
@@ -37,8 +36,6 @@ jobs:
 
       # Run widget tests for our flutter project.
       - name: Run tests
-        run: flutter test
+        run: flutter test --coverage
 
-      # Build apk.
-      - name: Build debug apk
-        run: cd example && flutter build apk --debug
+

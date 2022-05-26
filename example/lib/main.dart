@@ -52,8 +52,8 @@ class _MyAppState extends State<MyApp> {
             _pushBtn(),
             _removeBtn(),
             _removeAllBtn(),
-            _enableBtn(),
-            _disableBtn(),
+            _enableBtn(context),
+            _disableBtn(context),
             Expanded(
               child: ListView.builder(
                 itemCount: _shortcuts.length,
@@ -83,9 +83,8 @@ class _MyAppState extends State<MyApp> {
       id: getRandomString(5),
       title: getRandomString(10),
       iconResourceName: 'ic_android_black',
-      androidArg: AndroidArg(
-          uri: 'test://xxx', longLabel: "Very long label"),
-      iosArg: IosArg(subtitle: 'my subtitle'));
+      androidArg: const AndroidArg(uri: 'test://xxx', longLabel: "Very long label"),
+      iosArg: const IosArg(subtitle: 'my subtitle'));
 
   Widget _getAllBtn() {
     return Builder(builder: (context) {
@@ -155,7 +154,7 @@ class _MyAppState extends State<MyApp> {
         child: const Text('Remove all shortcut'));
   }
 
-  Widget _enableBtn() {
+  Widget _enableBtn(BuildContext context) {
     return Builder(
       builder: (ctx) => TextButton(
           onPressed: () async {
@@ -164,14 +163,10 @@ class _MyAppState extends State<MyApp> {
             }
             await flutterAppShortcut
                 .enableShortcuts(_shortcuts.map((e) => e.id).toList());
-            setState(() {
-              _shortcuts = _shortcuts
-                  .map((e) => e.copyWith(
-                      androidArg: e.androidArg?.copyWith(enabled: true)))
-                  .toList();
-            });
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Enabled all shortcuts')));
           },
-          child: const Text('Enable shortcut')),
+          child: const Text('Enable all shortcuts')),
     );
   }
 
@@ -185,7 +180,7 @@ class _MyAppState extends State<MyApp> {
     return false;
   }
 
-  Widget _disableBtn() {
+  Widget _disableBtn(BuildContext context) {
     return Builder(
       builder: (ctx) => TextButton(
           onPressed: () async {
@@ -196,14 +191,10 @@ class _MyAppState extends State<MyApp> {
                 .map((e) =>
                     DisableShortcutArg(id: e.id, reason: 'Reason ${e.id}'))
                 .toList());
-            setState(() {
-              _shortcuts = _shortcuts
-                  .map((e) => e.copyWith(
-                      androidArg: e.androidArg?.copyWith(enabled: false)))
-                  .toList();
-            });
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Disabled all shortcuts')));
           },
-          child: const Text('Disable shortcut')),
+          child: const Text('Disable all shortcuts')),
     );
   }
 }

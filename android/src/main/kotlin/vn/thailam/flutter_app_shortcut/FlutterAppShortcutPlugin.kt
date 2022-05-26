@@ -50,7 +50,7 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
             "disableShortcuts" -> {
                 return try {
                     val disableArgs: List<DisableShortcutArg> = args?.entries?.map {
-                        DisableShortcutArg(it.key, (it.value as? String) ?: "")
+                        DisableShortcutArg(it.key, (it.value as? String) ?: "Disabled")
                     } ?: return result.error("disableShortcut", "Invalid args=$args", args)
                     disableArgs.forEach {  arg ->
                         ShortcutManagerCompat.disableShortcuts(
