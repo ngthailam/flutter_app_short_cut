@@ -63,16 +63,19 @@ Add a new icon
 
 'x' means the operation is supported on platform
 
-| Name  | IOS | Android |
-| ------------- | ------------- |  ------------- |
-| getAll  |  x  |  x  | 
-| set | x | x | 
-| push | x | x | 
-| removeById | x | x | 
-| removeAll | x | x | 
-| enableShortcuts |  | x | 
-| disableShortcuts |  | x | 
+| Name  | IOS | Android | Note
+| ------------- | ------------- |  ------------- |   ------------- |
+| getAll  | x | x |  |
+| set | x | x |   |
+| push | x | x |   |
+| removeById | x | x |   |
+| removeAll | x | x |   |
+| enableShortcuts |  | x |  | 
+| disableShortcuts |  | x | API < 24 -> disable == remove |
 ## Arguments
+
+Arguments with platform prefix is only supported on said platform
+For example: AndroidArg only supports Android
 
 ### ShortcutArg
 | Name  | Type | Requirements | Description |
@@ -81,6 +84,7 @@ Add a new icon
 | title | String |  Not empty | App short cut label (title) | 
 | iconResourceName | String |  | Icon resource name (see below for usage) |
 | androidArg | AndroidArg |  | Extra arguments for Android shortcuts |
+| androidReadOnlyArg | AndroidReadOnlyArg |  | Read only args when call get shortcuts, if set from dart side, nothing happens |
 | iosArg | IosArg |  | Extra arguments for IOS shortcuts |
 
 ### AndroidArg
@@ -104,7 +108,6 @@ Limitations by either platform or because this plugin does not support it yet
 - Pinned shortcut cannot be removed, only disabled
 - Shortcut after disabled cannot be enabled, however, pinned shortcut can
 - Cannot return icon name when cal getShortcuts
-- Cannot return enabled, disabled status
 - Max 4 shortcuts can be displayed at once
 - Cannot use icon from flutter side (will implement in the future)
 ## IOS

@@ -41,7 +41,10 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
         when (call.method) {
             "getAllShortcuts" -> {
                 return try {
-                    val shortcuts = ShortcutManagerCompat.getDynamicShortcuts(applicationContext!!)
+                    val shortcutsDynamic = ShortcutManagerCompat.getShortcuts(applicationContext!!, ShortcutManagerCompat.FLAG_MATCH_DYNAMIC)
+                    val shortcutsCached = ShortcutManagerCompat.getShortcuts(applicationContext!!, ShortcutManagerCompat.FLAG_MATCH_CACHED)
+                    val shortcutsPinned = ShortcutManagerCompat.getShortcuts(applicationContext!!, ShortcutManagerCompat.FLAG_MATCH_PINNED)
+                    val shortcuts = (shortcutsDynamic + shortcutsPinned + shortcutsCached).toSet()
                     result.success(shortcuts.associate { it.id to ShortcutArg.fromInfoCompat(it).toMap() })
                 } catch (t: Throwable) {
                     result.error("getAllShortcuts", t.message, args)
