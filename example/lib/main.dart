@@ -87,6 +87,7 @@ class _MyAppState extends State<MyApp> {
       id: getRandomString(5),
       title: getRandomString(10),
       iconResourceName: 'ic_android_black',
+      flutterIconPath: 'asset/ios_shortcut.png',
       androidArg:
           const AndroidArg(uri: 'test://xxx', longLabel: "Very long label"),
       iosArg: const IosArg(subtitle: 'my subtitle'));

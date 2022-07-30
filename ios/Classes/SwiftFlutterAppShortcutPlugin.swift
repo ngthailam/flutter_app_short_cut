@@ -6,11 +6,13 @@ struct ShortcutArg {
     var title: String
     var subtitle: String
     var icon: String
+    var flutterIcon: String
 
     init(dict: Dictionary<String, Any>) {
         self.id = dict["id"] as? String ?? ""
         self.title = dict["title"] as? String ?? ""
         self.icon = dict["iconResourceName"] as? String ?? ""
+        self.flutterIcon = dict["flutterIconPath"] as? String ?? ""
         // Set subtitle
         var subtitle: String = ""
         if let iosArg = dict["iosArg"] as? [String: Any] {
@@ -22,9 +24,15 @@ struct ShortcutArg {
 
 
 public class SwiftFlutterAppShortcutPlugin: NSObject, FlutterPlugin {
+  var localRegistrar: FlutterPluginRegistrar?
+
+  init(registrar: FlutterPluginRegistrar) {
+     self.localRegistrar = registrar
+  }
+
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "flutter_app_shortcut", binaryMessenger: registrar.messenger())
-    let instance = SwiftFlutterAppShortcutPlugin()
+    let instance = SwiftFlutterAppShortcutPlugin(registrar: registrar)
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

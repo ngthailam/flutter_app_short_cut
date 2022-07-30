@@ -2,18 +2,18 @@ package vn.thailam.flutter_app_shortcut
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.annotation.NonNull
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-
+import io.flutter.FlutterInjector
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import java.lang.Exception
 
 /** FlutterAppShortcutPlugin */
 class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
@@ -143,7 +143,7 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
                 .setLongLabel(shortcutArg.longLabel)
                 .setIntent(intent)
 
-        // Get resource icon
+        // Get resource icon from native side
         if (shortcutArg.iconResourceName.trim().isNotEmpty()) {
             val resourceId: Int = applicationContext!!.resources
                 .getIdentifier(
@@ -158,6 +158,16 @@ class FlutterAppShortcutPlugin : FlutterPlugin, MethodCallHandler {
 
             val iconCompat =
                 IconCompat.createWithResource(applicationContext!!, resourceId)
+            shortcutBuilder.setIcon(iconCompat)
+        }
+
+        // Use icon from flutter side
+        if (shortcutArg.flutterIconPath.trim().isNotEmpty()) {
+            val loader = FlutterInjector.instance().flutterLoader()
+            val key = loader.getLookupKeyForAsset(shortcutArg.flutterIconPath.trim())
+            val inputStream = applicationContext!!.assets.open(key)
+            val myBitmap = BitmapFactory.decodeStream(inputStream)
+            val iconCompat = IconCompat.createWithBitmap(myBitmap)
             shortcutBuilder.setIcon(iconCompat)
         }
 

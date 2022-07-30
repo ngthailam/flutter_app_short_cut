@@ -29,6 +29,7 @@ FlutterAppShortcut().push(
         id: 'id_1',
         title: 'Home page',
         iconResourceName: 'ic_android_black',
+        flutterIconPath: 'asset/ic_heart.png',
         androidArg: AndroidArg(
             longLabel: 'Go to Home page',
             uri: 'https://www.google.com',
@@ -37,9 +38,14 @@ FlutterAppShortcut().push(
 )
 ```
 
-Add a new icon
+Add a new icon with asset in native side
 - Add icon resource to `android/app/src/main/res`
 - Set `iconResourceName` to the same name as the added icon in previous step
+
+Add a new icon with asset in flutter side
+- Add icon resource to assets folder
+- Add icon path to pubspec.yaml
+- set `flutterIconPath` to your path in flutter asset folder. Ex `assets/ic_heart.png`
 
 ### IOS
 ```
@@ -82,7 +88,8 @@ For example: AndroidArg only supports Android
 | ------------- | ------------- |  ------------- | ------------- |
 | id  |  String  |  Unique, Not empty  | When pushing shortcuts with the same ID, the existing one is updated |
 | title | String |  Not empty | App short cut label (title) | 
-| iconResourceName | String |  | Icon resource name (see below for usage) |
+| iconResourceName | String |  | Icon resource name from native side (see below for usage) |
+| flutterIconPath | String |  | Icon resource path from flutter side
 | androidArg | AndroidArg |  | Extra arguments for Android shortcuts |
 | androidReadOnlyArg | AndroidReadOnlyArg |  | Read only args when call get shortcuts, if set from dart side, nothing happens |
 | iosArg | IosArg |  | Extra arguments for IOS shortcuts |
@@ -109,7 +116,6 @@ Limitations by either platform or because this plugin does not support it yet
 - Shortcut after disabled cannot be enabled, however, pinned shortcut can
 - Cannot return icon name when cal getShortcuts
 - Max 4 shortcuts can be displayed at once
-- Cannot use icon from flutter side (will implement in the future)
 ## IOS
 - Cannot return icon name when cal getShortcuts
 - Max 4 shortcuts can be displayed at once
@@ -118,13 +124,9 @@ Limitations by either platform or because this plugin does not support it yet
 <br><br>
 
 # TODOs
-## Android
-- [ ] Allow icon from flutter side
-- [ ] Provide more accurate errors if needed
 ## IOS
 - [ ] Allow icon from flutter side
 - [ ] Enable deeplink navigation on click shortcut
-- [ ] Provide more accurate errors if needed
 <br><br>
 
 # Bugs, Ideas, and Feedback
