@@ -1,6 +1,7 @@
 const String keyId = "id";
 const String keyTitle = "title";
 const String keyIconResourceName = "iconResourceName";
+const String keyFlutterIconPath = "flutterIconPath";
 const String keyAndroidArg = "androidArg";
 const String keyAndroidReadOnlyArg = "androidReadOnlyArg";
 const String keyIosArg = "iosArg";
@@ -12,8 +13,11 @@ class ShortcutArg {
   /// Label of the shortcut
   final String title;
 
-  /// App short cut leading icon
+  /// App short cut leading icon from native asset
   final String iconResourceName;
+
+  /// App short cut leading icon from flutter asset
+  final String flutterIconPath;
 
   /// Args for Android only
   final AndroidArg? androidArg;
@@ -31,6 +35,7 @@ class ShortcutArg {
     required this.id,
     required this.title,
     this.iconResourceName = '',
+    this.flutterIconPath = '',
     this.androidArg,
     this.androidReadOnlyArg,
     this.iosArg,
@@ -41,6 +46,7 @@ class ShortcutArg {
     String? id,
     String? title,
     String? iconResourceName,
+    String? flutterIconPath,
     AndroidArg? androidArg,
     AndroidReadOnlyArg? androidReadOnlyArg,
     IosArg? iosArg,
@@ -49,6 +55,7 @@ class ShortcutArg {
         id: id ?? this.id,
         title: title ?? this.title,
         iconResourceName: iconResourceName ?? this.iconResourceName,
+        flutterIconPath: flutterIconPath ?? this.flutterIconPath,
         androidArg: androidArg ?? this.androidArg,
         androidReadOnlyArg: androidReadOnlyArg ?? this.androidReadOnlyArg,
         iosArg: iosArg ?? this.iosArg,
@@ -59,6 +66,7 @@ class ShortcutArg {
       keyId: id,
       keyTitle: title,
       keyIconResourceName: iconResourceName,
+      keyFlutterIconPath: flutterIconPath,
       keyAndroidArg: androidArg?.toMap(),
       keyAndroidReadOnlyArg: androidReadOnlyArg?.toMap(),
       keyIosArg: iosArg?.toMap(),
@@ -67,10 +75,12 @@ class ShortcutArg {
 
   factory ShortcutArg.fromMap(Map<dynamic, dynamic> map) {
     return ShortcutArg(
-      id: map['id'] as String,
-      title: map['title'] as String,
+      id: map[keyId] as String,
+      title: map[keyTitle] as String,
       iconResourceName:
-          map['iconResourceName'] is String ? map['iconResourceName'] : '',
+          map[keyIconResourceName] is String ? map[keyIconResourceName] : '',
+      flutterIconPath:
+          map[keyFlutterIconPath] is String ? map[keyFlutterIconPath] : '',
       androidArg: map[keyAndroidArg] is Map<dynamic, dynamic>
           ? AndroidArg.fromMap(map[keyAndroidArg])
           : null,
@@ -87,6 +97,7 @@ class ShortcutArg {
   String toString() {
     return "[ShortcutArg] id=$id, shortLabel=$title, "
         "iconResourceName=$iconResourceName, "
+        "flutterIconPath=$flutterIconPath, "
         "androidArg=${androidArg?.toMap()}, "
         "androidReadOnlyArg=${androidReadOnlyArg?.toMap()},"
         "iosArg=${iosArg?.toMap()}";

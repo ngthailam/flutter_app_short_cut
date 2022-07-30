@@ -112,6 +112,7 @@ void main() {
     const String id = "id";
     const String title = "title";
     const String iconResourceName = "iconResourceName";
+    const String flutterIconPath = "asset/ic_sb.png";
     const IosArg iosArg = IosArg();
     const String subtitle = "subtitle of ios";
     test('test ShortcutArg default constructor', () {
@@ -128,6 +129,7 @@ void main() {
         keyId: id,
         keyTitle: title,
         keyIconResourceName: iconResourceName,
+        keyFlutterIconPath: flutterIconPath,
         keyAndroidArg: null,
         keyIosArg: {"subtitle": subtitle},
         keyAndroidReadOnlyArg: null,
@@ -136,6 +138,7 @@ void main() {
           id: id,
           title: title,
           iconResourceName: iconResourceName,
+          flutterIconPath: flutterIconPath,
           iosArg: iosArg.copyWith(subtitle: subtitle));
       expect(actual.toMap(), expected);
     });
@@ -161,6 +164,7 @@ void main() {
         id: id,
         title: title,
         iconResourceName: iconResourceName,
+        flutterIconPath: flutterIconPath,
         iosArg: iosArg,
       ).toString();
 
@@ -168,6 +172,7 @@ void main() {
         actual,
         "[ShortcutArg] id=$id, shortLabel=$title, "
         "iconResourceName=$iconResourceName, "
+        "flutterIconPath=$flutterIconPath, "
         "androidArg=${null}, "
         "androidReadOnlyArg=${null},"
         "iosArg=${iosArg.toMap()}",

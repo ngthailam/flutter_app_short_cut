@@ -8,6 +8,7 @@ data class ShortcutArg(
     val shortLabel: String,
     val longLabel: String = "",
     val iconResourceName: String = "",
+    val flutterIconPath: String = "",
     val uri: String = "",
     val isPinned: Boolean? = null,
     val disabledMsg: String? = null,
@@ -18,6 +19,7 @@ data class ShortcutArg(
             "id" to id,
             "title" to shortLabel,
             "iconResourceName" to iconResourceName,
+            "flutterIconPath" to flutterIconPath,
             "androidArg" to mapOf<String, Any>(
                "longLabel" to longLabel,
                "uri" to uri
@@ -38,6 +40,7 @@ data class ShortcutArg(
                 longLabel = infoCompat.longLabel.toString(),
                 uri = infoCompat.intent.toUri(Intent.URI_INTENT_SCHEME),
                 iconResourceName = "",
+                flutterIconPath = "",
                 isPinned = infoCompat.isPinned,
                 isEnabled = infoCompat.isEnabled,
                 disabledMsg = infoCompat.disabledMessage.toString()
@@ -51,6 +54,7 @@ data class ShortcutArg(
                 shortLabel = map["title"] as String,
                 longLabel = androidArg["longLabel"] as String,
                 iconResourceName = map["iconResourceName"] as String,
+                flutterIconPath = map["flutterIconPath"] as String,
                 uri = androidArg["uri"] as String
             )
         }
